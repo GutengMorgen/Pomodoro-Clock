@@ -1,0 +1,56 @@
+#Container {
+    display: flex;
+    gap: 20px;
+    user-select: none;
+}
+
+#sessionContainer {
+    background-color: antiquewhite;
+    width: 50%;
+    height: 100vh;
+    padding: 10em;
+}
+
+#breakContainer {
+    background-color: antiquewhite;
+    width: 50%;
+    height: 100vh;
+    padding: 10em;
+}
+
+.editBtn {
+    /* background-color: navajowhite; */
+    user-select: none;
+}
+
+.minutes {
+    color: black;
+    background: transparent;
+    border: 1px solid black;
+    font-size: xxx-large;
+    width: 60px;
+    height: 46px;
+    resize: none;
+    text-align: center;
+    overflow: hidden;
+}
+
+.seconds {
+    color: black;
+    background: transparent;
+    border: 1px solid black;
+    font-size: xxx-large;
+    width: 60px;
+    height: 46px;
+    resize: none;
+    text-align: center;
+    overflow: hidden;
+}
+
+.separador {
+    color: black;
+    display: inline-block;
+    font-size: xxx-large;
+    text-align: center;
+    padding: 10px;
+}
