@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 
-export default function Session(){
-  const [edit, setEdit] = useState(true);
+
+const Session: React.FC<Props> = (props) => {
+  const [edit, setEdit] = useState<boolean>(true);
 
   const handleClick = () => {
     if(edit)
     {
       setEdit(false);
+      if(props.IntervalId !== null){
+        clearInterval(props.IntervalId);
+      }
     }
     else{
       setEdit(true);
@@ -20,10 +24,32 @@ export default function Session(){
     
     // console.log(minuteElement.value, secondElement.value);
 
-    if(minuteElement.value > '60' || secondElement.value > '60') alert('los valores no son validos! IDIOTE');
+    if(minuteElement.value > '60' || secondElement.value > '60')
+      return alert('los valores no son validos! IDIOTE');
 
-    else{
+    else {
       setEdit(true);
+      props.SetElements([minuteElement, secondElement]);
+      // const convertMinute: number = parseInt(minuteElement.value) * 60;
+      // let totalSeconds: number = convertMinute + parseInt(secondElement.value);
+  
+      // const interval = setInterval(() => {
+      //   const minutes = Math.floor(totalSeconds / 60);
+      //   const seconds = totalSeconds % 60;
+      //   minuteElement.value = `${minutes < 10 ? "0" + minutes : minutes}`;
+      //   secondElement.value = `${seconds < 10 ? "0" + seconds : seconds}`;
+      //   totalSeconds--;
+  
+      //   if (totalSeconds <= 0) {
+      //     if (props.IntervalId) {
+      //       clearInterval(props.IntervalId);
+      //       props.SetIntervalId(null);
+      //     }
+      //     alert("Time's up!");
+      //   }
+      // }, 1000);
+  
+      // props.SetIntervalId(interval);
     }
   }
 
@@ -38,3 +64,11 @@ export default function Session(){
     </div>
   )
 }
+
+interface Props{
+  IntervalId: number | null;
+  SetIntervalId: React.Dispatch<React.SetStateAction<number | null>>;
+  SetElements: React.Dispatch<React.SetStateAction<HTMLTextAreaElement[]>>;
+}
+
+export default Session;
