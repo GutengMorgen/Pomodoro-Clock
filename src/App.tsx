@@ -5,11 +5,11 @@ import Session from './session';
 import Break from './break';
 
 function App() {
+  const audio = new Audio('https://www.fesliyanstudios.com/play-mp3/4386');
   const refButton = useRef<HTMLButtonElement>(null);
   const intervalId = useRef<number | null>(null);
   const [elements, setElements] = useState<HTMLTextAreaElement[]>([]);
-  const [verification, setVerification] = useState<boolean>(false);
-  const audio = new Audio('https://www.fesliyanstudios.com/play-mp3/4386');
+  const [num, setNum] = useState<number>(1);
 
   useEffect(() => {
     if(!refButton.current) return;
@@ -22,30 +22,26 @@ function App() {
     const mn2 = _secondC.querySelector('.minutes') as HTMLTextAreaElement
     const sc2 = _secondC.querySelector('.seconds') as HTMLTextAreaElement
 
-    if(parseInt(mn1.value) > 0 || parseInt(sc1.value) > 0){
+    if(num === 1){
       setElements([mn1, sc1])
-      setTimeout(() => {
-        mn2.value = '05';
-        sc2.value = '00';
-      }, 1000);
-
       refButton.current.textContent = 'Start Session';
+      mn2.value = '05';
+      sc2.value = '00';
     }
-    else if(parseInt(mn2.value) > 0 || parseInt(sc2.value) > 0){
+    else if(num === 2){
       setElements([mn2, sc2])
-      setTimeout(() => {
-        mn1.value = '25';
-        sc1.value = '00';
-      }, 1000);
-      
       refButton.current.textContent = 'Start Break';
+      mn1.value = '25';
+      sc1.value = '00';
     }
-    setVerification(false);
 
-  }, [refButton, verification]);
+  }, [refButton, num]);
 
 
   const handleClickStart = () => {
+    if(elements === null){
+      return alert('Ocurrio un error en la pagina por alguna cagada en el codigo que me falto corregir, recarga la pagina porfa, gracias.')
+    }
     let totalSeconds: number = parseInt(elements[0].value) * 60 + parseInt(elements[1].value);
   
     const interval = setInterval(() => {
@@ -58,8 +54,11 @@ function App() {
       if (totalSeconds < 0 && refButton.current && intervalId.current) {
         clearInterval(intervalId.current);
         intervalId.current = null;
-        setVerification(true);
+
+        num === 1 ? setNum(2) : setNum(1);
+
         refButton.current.disabled = false;
+
         audio.play();
         setTimeout(() => audio.pause(), 4000);
       }

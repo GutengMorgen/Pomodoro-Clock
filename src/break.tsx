@@ -34,9 +34,9 @@ const Break: React.FC<Props> = (props) => {
   return(
     <div id='breakContainer'>
       <button className="editBtn" onClick={handleClick}>edit</button>
-      <textarea className="minutes" defaultValue='05'></textarea>
+      <textarea className="minutes" defaultValue='05' maxLength={2}></textarea>
       <span className="separador">:</span>
-      <textarea className="seconds" defaultValue='00'></textarea>
+      <textarea className="seconds" defaultValue='00' maxLength={2}></textarea>
       {!edit && <button onClick={handleSaveClick}>save</button>}
     </div>
   )

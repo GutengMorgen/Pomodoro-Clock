@@ -1,7 +1,6 @@
 #Container {
     display: flex;
     gap: 20px;
-    user-select: none;
 }
 
 #sessionContainer {
@@ -28,7 +27,7 @@
     background: transparent;
     border: 1px solid black;
     font-size: xxx-large;
-    width: 60px;
+    width: 80px;
     height: 46px;
     resize: none;
     text-align: center;
@@ -53,4 +52,12 @@
     font-size: xxx-large;
     text-align: center;
     padding: 10px;
+}
+
+textarea, div, button{
+    user-select: none;
+}
+
+textarea:disabled, button:disabled {
+    pointer-events: none;
 }
