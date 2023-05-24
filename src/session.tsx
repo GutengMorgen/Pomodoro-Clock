@@ -8,8 +8,8 @@ const Session: React.FC<Props> = (props) => {
     if(edit)
     {
       setEdit(false);
-      if(props.IntervalId !== null){
-        clearInterval(props.IntervalId);
+      if(props.IntervalId.current !== null){
+        clearInterval(props.IntervalId.current);
       }
     }
     else{
@@ -21,41 +21,20 @@ const Session: React.FC<Props> = (props) => {
     const parent = e.currentTarget.parentNode;
     const minuteElement = parent?.querySelector('.minutes') as HTMLTextAreaElement;
     const secondElement = parent?.querySelector('.seconds') as HTMLTextAreaElement;
-    
-    // console.log(minuteElement.value, secondElement.value);
 
     if(minuteElement.value > '60' || secondElement.value > '60')
       return alert('los valores no son validos! IDIOTE');
 
     else {
       setEdit(true);
-      props.SetElements([minuteElement, secondElement]);
-      // const convertMinute: number = parseInt(minuteElement.value) * 60;
-      // let totalSeconds: number = convertMinute + parseInt(secondElement.value);
-  
-      // const interval = setInterval(() => {
-      //   const minutes = Math.floor(totalSeconds / 60);
-      //   const seconds = totalSeconds % 60;
-      //   minuteElement.value = `${minutes < 10 ? "0" + minutes : minutes}`;
-      //   secondElement.value = `${seconds < 10 ? "0" + seconds : seconds}`;
-      //   totalSeconds--;
-  
-      //   if (totalSeconds <= 0) {
-      //     if (props.IntervalId) {
-      //       clearInterval(props.IntervalId);
-      //       props.SetIntervalId(null);
-      //     }
-      //     alert("Time's up!");
-      //   }
-      // }, 1000);
-  
-      // props.SetIntervalId(interval);
+      if(props.RefButton.current !== null)
+        props.RefButton.current.disabled = false;
     }
   }
 
 
   return(
-    <div id='sessionContainer'>
+    <div id='sessionContainer' className='select'>
       <button className="editBtn" onClick={handleClick}>edit</button>
       <textarea className="minutes" defaultValue='25' disabled={edit}></textarea>
       <span className="separador">:</span>
@@ -66,9 +45,8 @@ const Session: React.FC<Props> = (props) => {
 }
 
 interface Props{
-  IntervalId: number | null;
-  SetIntervalId: React.Dispatch<React.SetStateAction<number | null>>;
-  SetElements: React.Dispatch<React.SetStateAction<HTMLTextAreaElement[]>>;
+  IntervalId: React.MutableRefObject<number | null>;
+  RefButton: React.RefObject<HTMLButtonElement>;
 }
 
 export default Session;
