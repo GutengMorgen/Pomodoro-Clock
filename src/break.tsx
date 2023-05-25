@@ -21,23 +21,62 @@ const Break: React.FC<Props> = (props) => {
     const minuteElement = parent?.querySelector('.minutes') as HTMLTextAreaElement;
     const secondElement = parent?.querySelector('.seconds') as HTMLTextAreaElement;
 
-    if(minuteElement.value > '60' || secondElement.value > '60')
-      return alert('los valores no son validos! IDIOTE');
+    const minuteNumber: number = parseInt(minuteElement.value);
+    const secondNumber: number = parseInt(secondElement.value);
+    
+    if (isNaN(minuteNumber) || isNaN(secondNumber)) {
+      return alert('Los valores no son válidos. Por favor, ingresa un número.');
+    }
 
-    else {
+    else if (secondNumber > 60) {
+      return alert('Los valores no son válidos. Los minutos y segundos deben ser menores o iguales a 60 o los segundos deben ser mayor o igual 10');
+    }
+    if(minuteNumber === 0 && secondNumber === 0){
+      return alert('Los valores no son validos. Por favor, ingresa un número.')
+    }
+
+    else{
+      console.log(minuteNumber, secondNumber)
       setEdit(true);
-      if(props.RefButton.current !== null)
+      if (props.RefButton.current !== null) {
         props.RefButton.current.disabled = false;
+      }
     }
   }
 
+  const validateInput = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const inputKey = e.key;
+    const isDigit = /^\d$/.test(inputKey);
+    const isDeleteKey = inputKey === 'Delete' || inputKey === 'Backspace';
+  
+    if (!isDigit && !isDeleteKey) {
+      e.preventDefault(); // Prevent entering non-digit characters
+    }
+  };
+
   return(
-    <div id='breakContainer'>
-      <button className="editBtn" onClick={handleClick}>edit</button>
-      <textarea className="minutes" defaultValue='05' maxLength={2}></textarea>
+    <div className='testing'>
+      <button 
+      className="editBtn material-symbols-rounded" 
+      onClick={handleClick}
+      >edit
+      </button>
+      <textarea 
+      className="minutes" 
+      defaultValue='05' 
+      disabled={edit} 
+      maxLength={2}
+      onKeyDown={validateInput}>
+      </textarea>
       <span className="separador">:</span>
-      <textarea className="seconds" defaultValue='00' maxLength={2}></textarea>
-      {!edit && <button onClick={handleSaveClick}>save</button>}
+      <textarea 
+      className="seconds" 
+      defaultValue='00' 
+      disabled={edit} 
+      maxLength={2}
+      onKeyDown={validateInput}>
+      </textarea>
+      {!edit && <button onClick={handleSaveClick} className='saveBtn'>Save</button>}
     </div>
   )
 }

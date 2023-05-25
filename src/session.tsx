@@ -56,23 +56,28 @@ const Session: React.FC<Props> = (props) => {
   };
 
   return(
-    <div id='sessionContainer' className='select'>
-      <button className="editBtn" 
-      onClick={handleClick}>edit</button>
-      <textarea className="minutes" 
+    <div className='testing'>
+      <button 
+      className="editBtn material-symbols-rounded" 
+      onClick={handleClick}
+      >edit
+      </button>
+      <textarea 
+      className="minutes" 
       defaultValue='25' 
       disabled={edit} 
       maxLength={3}
       onKeyDown={validateInput}>
       </textarea>
       <span className="separador">:</span>
-      <textarea className="seconds" 
+      <textarea 
+      className="seconds" 
       defaultValue='00' 
       disabled={edit} 
       maxLength={2}
       onKeyDown={validateInput}>
       </textarea>
-      {!edit && <button onClick={handleSaveClick}>save</button>}
+      {!edit && <button onClick={handleSaveClick} className='saveBtn'>Save</button>}
     </div>
   )
 }

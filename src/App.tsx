@@ -76,16 +76,18 @@ function App() {
   }
 
   return (
-    <>
-      <div>
+    <div className='Container'>
+      <div id='sessionContainer'>
         <Session IntervalId={intervalId}  RefButton={refButton}/>
-        <div>
-          <button onClick={handleClickStop}>Stop</button>
-          <button onClick={handleClickStart} id='button' ref={refButton}>Start Session</button>
-        </div>
+      </div>
+      <div id='buttonsContainer'>
+        <button onClick={handleClickStop} id='stopBtn'>Stop</button>
+        <button onClick={handleClickStart} id='startBtn' ref={refButton}>Start Session</button>
+      </div>
+      <div id='breakContainer'>
         <Break IntervalId={intervalId} RefButton={refButton}/>
       </div>
-    </>
+    </div>
   )
 }
 
